@@ -11,7 +11,7 @@ spring:
       server:
         native:
           #search-locations: "classpath:/config"
-          # search-locations: "file:///Users//upadhyay007//Documents//config"
+          #search-locations: "file:///Users//upadhyay007//Documents//config"
         git:
           uri: "https://github.com/upadhyay007/delivery-config.git"
           default-label: main
