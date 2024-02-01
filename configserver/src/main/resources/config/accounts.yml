@@ -1,0 +1,11 @@
+build:
+  version: "3.0"
+
+accounts:
+  message: "Welcome to Delivery accounts related local APIs config "
+  contactDetails:
+    name: "Anurag Upadhyay - Developer"
+    email: "anurag@delivery.com"
+  onCallSupport:
+    - (555) 555-1234
+    - (555) 523-1345
