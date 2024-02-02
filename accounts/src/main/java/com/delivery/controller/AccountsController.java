@@ -23,20 +23,32 @@ import com.delivery.dto.AccountsContactInfoDto;
 import com.delivery.dto.CustomerDto;
 import com.delivery.dto.ErrorResponseDto;
 import com.delivery.dto.ResponseDto;
+import com.delivery.service.IAccountsService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
+@Tag(
+        name = "CRUD REST APIs for Accounts in Delivery",
+        description = "CRUD REST APIs in Delivery to CREATE, UPDATE, FETCH AND DELETE account details"
+)
 
 @RestController
 @RequestMapping(path = "/api", produces = { MediaType.APPLICATION_JSON_VALUE })
 @Validated
 public class AccountsController {
 	private static final Logger logger = LoggerFactory.getLogger(AccountsController.class);
+	
+    private final IAccountsService iAccountsService;
+
+    public AccountsController(IAccountsService iAccountsService) {
+        this.iAccountsService = iAccountsService;
+    }
 	
 	@Value("${build.version}")
 	private String buildVersion;
@@ -67,7 +79,7 @@ public class AccountsController {
 )
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDto> createAccount(@RequestBody CustomerDto customerDto) {
-		// iAccountsService.createAccount(customerDto);
+		iAccountsService.createAccount(customerDto);
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(new ResponseDto(AccountsConstants.STATUS_201, AccountsConstants.MESSAGE_201));
 	}
@@ -94,8 +106,8 @@ public class AccountsController {
     public ResponseEntity<CustomerDto> fetchAccountDetails(@RequestParam
                                                                @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
                                                                String mobileNumber) {
-        //CustomerDto customerDto = iAccountsService.fetchAccount(mobileNumber);
-        return ResponseEntity.status(HttpStatus.OK).body(new CustomerDto());
+        CustomerDto customerDto = iAccountsService.fetchAccount(mobileNumber);
+        return ResponseEntity.status(HttpStatus.OK).body(customerDto);
     }
     
     @Operation(
@@ -122,7 +134,7 @@ public class AccountsController {
     )
     @PutMapping("/update")
     public ResponseEntity<ResponseDto> updateAccountDetails(@Valid @RequestBody CustomerDto customerDto) {
-        boolean isUpdated = true; //write logic to update in data base
+        boolean isUpdated = iAccountsService.updateAccount(customerDto);
         if(isUpdated) {
             return ResponseEntity
                     .status(HttpStatus.OK)
@@ -159,7 +171,7 @@ public class AccountsController {
     public ResponseEntity<ResponseDto> deleteAccountDetails(@RequestParam
                                                                 @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
                                                                 String mobileNumber) {
-        boolean isDeleted = true;//Write logic for soft delete
+        boolean isDeleted = iAccountsService.deleteAccount(mobileNumber);
         if(isDeleted) {
             return ResponseEntity
                     .status(HttpStatus.OK)
@@ -193,7 +205,9 @@ public class AccountsController {
 	@GetMapping("/build-info")
 	public ResponseEntity<String> getBuildInfo() {
 		logger.debug("getBuildInfo() method Invoked");
-		return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(buildVersion);
 	}
     @Operation(
             summary = "Get Java version",
