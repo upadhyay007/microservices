@@ -7,10 +7,8 @@ build:
 spring:
   application:
     name: "accounts"
-    
   profiles:
     active: "prod"
-    
   config:
     import: "optional:configserver:http://localhost:8071/"
   datasource:
@@ -50,6 +48,7 @@ eureka:
   instance:
     hostname: localhost
     #preferIpAddress: true
+    #ip-address: 178.16.138.103
   client:
     fetchRegistry: true
     registerWithEureka: true

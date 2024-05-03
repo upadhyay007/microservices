@@ -24,8 +24,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Pattern;
 @Tag(
-        name = "REST API for Customers in EazyBank",
-        description = "REST APIs in EazyBank to FETCH customer details"
+        name = "REST API for Customers in Delivery App",
+        description = "REST APIs in Delivery to FETCH customer details"
 )
 @RestController
 @RequestMapping(path="/api", produces = {MediaType.APPLICATION_JSON_VALUE})
