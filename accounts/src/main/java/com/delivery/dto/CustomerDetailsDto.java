@@ -1,5 +1,7 @@
 package com.delivery.dto;
 
+import java.util.List;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -36,5 +38,10 @@ public class CustomerDetailsDto {
             description = "Account details of the Customer"
     )
     private AccountsDto accountsDto;
+    
+    @Schema(
+            description = "Product details of the Customer"
+    )
+    private List<ProductDto> productDto;
     
 }

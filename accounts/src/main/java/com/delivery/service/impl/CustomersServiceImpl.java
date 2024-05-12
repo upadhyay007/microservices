@@ -1,9 +1,14 @@
 package com.delivery.service.impl;
 
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.delivery.dto.AccountsDto;
 import com.delivery.dto.CustomerDetailsDto;
+import com.delivery.dto.LoansDto;
+import com.delivery.dto.ProductDto;
 import com.delivery.entity.Accounts;
 import com.delivery.entity.Customer;
 import com.delivery.exception.ResourceNotFoundException;
@@ -12,6 +17,7 @@ import com.delivery.mapper.CustomerMapper;
 import com.delivery.repository.AccountsRepository;
 import com.delivery.repository.CustomerRepository;
 import com.delivery.service.ICustomersService;
+import com.delivery.service.client.ProductsFeignClient;
 
 import lombok.AllArgsConstructor;
 @Service
@@ -19,7 +25,7 @@ import lombok.AllArgsConstructor;
 public class CustomersServiceImpl implements ICustomersService{
     private AccountsRepository accountsRepository;
     private CustomerRepository customerRepository;
-    //private CardsFeignClient cardsFeignClient;
+    private ProductsFeignClient productsFeignClient;
     //private LoansFeignClient loansFeignClient;
 
     /**
@@ -39,8 +45,8 @@ public class CustomersServiceImpl implements ICustomersService{
         CustomerDetailsDto customerDetailsDto = CustomerMapper.mapToCustomerDetailsDto(customer, new CustomerDetailsDto());
         customerDetailsDto.setAccountsDto(AccountsMapper.mapToAccountsDto(accounts, new AccountsDto()));
 
-        //ResponseEntity<LoansDto> loansDtoResponseEntity = loansFeignClient.fetchLoanDetails(correlationId, mobileNumber);
-        //customerDetailsDto.setLoansDto(loansDtoResponseEntity.getBody());
+        ResponseEntity<List<ProductDto>> productsDtoResponseEntity = productsFeignClient.fetchProductsList(mobileNumber);
+        customerDetailsDto.setProductDto(productsDtoResponseEntity.getBody());
 
         //ResponseEntity<CardsDto> cardsDtoResponseEntity = cardsFeignClient.fetchCardDetails(correlationId, mobileNumber);
         //customerDetailsDto.setCardsDto(cardsDtoResponseEntity.getBody());
