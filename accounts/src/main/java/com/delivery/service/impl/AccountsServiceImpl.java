@@ -28,7 +28,7 @@ public class AccountsServiceImpl implements IAccountsService {
 	private CustomerRepository customerRepository;
 
 	@Override
-	public void createAccount(CustomerDto customerDto) {
+	public CustomerDto createAccount(CustomerDto customerDto) {
 		Customer customer = CustomerMapper.mapToCustomer(customerDto, new Customer());
 		Optional<Customer> optionalCustomer = customerRepository.findByMobileNumber(customerDto.getMobileNumber());
 		if (optionalCustomer.isPresent()) {
@@ -36,8 +36,9 @@ public class AccountsServiceImpl implements IAccountsService {
 					"Customer already registered with given mobileNumber " + customerDto.getMobileNumber());
 		}
 		Customer savedCustomer = customerRepository.save(customer);
-		accountsRepository.save(createNewAccount(savedCustomer));
-
+		Accounts save = accountsRepository.save(createNewAccount(savedCustomer));
+		CustomerDto savedCustomerDto = CustomerMapper.mapToCustomerDto(savedCustomer, new CustomerDto());
+		return savedCustomerDto;
 	}
 
 	/**
