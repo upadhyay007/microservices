@@ -37,7 +37,7 @@ public class ProductsControllerWebLayerTest {
 	void createProduct_when_valid_userdetails() throws Exception {
 		// Arrange
 		ProductDto productDto = new ProductDto();
-		productDto.setMobileNumber("9810270673");
+		productDto.setMobileNumber("1234567890");
 		productDto.setProductName("Milk");
 		productDto.setProductDesc("Pure Milk");
 		when(iProductServices.createProduct(any(ProductDto.class))).thenReturn(true);
