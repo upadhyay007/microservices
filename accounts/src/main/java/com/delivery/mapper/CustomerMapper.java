@@ -12,6 +12,13 @@ public class CustomerMapper {
         customerDto.setMobileNumber(customer.getMobileNumber());
         return customerDto;
     }
+    
+    public static CustomerDto mapToCustomerAccountDto(Customer customer, CustomerDto customerDto) {
+        customerDto.setName(customer.getName());
+        customerDto.setEmail(customer.getEmail());
+        customerDto.setMobileNumber(customer.getMobileNumber());
+        return customerDto;
+    }
 
     public static CustomerDetailsDto mapToCustomerDetailsDto(Customer customer, CustomerDetailsDto customerDetailsDto) {
         customerDetailsDto.setName(customer.getName());

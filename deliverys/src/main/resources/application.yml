@@ -1,12 +1,12 @@
 server:
-  port: 8082
+  port: 8085
 
 build:
   version: "3.0"
     
 spring:
   application:
-    name: "products"
+    name: "deliverys"
   profiles:
     active: "prod"
   config:
@@ -57,7 +57,8 @@ eureka:
 
 info:
   app:
-    name: "products"
-    description: "Products Application"
+    name: "deliverys"
+    description: "Delivery Micro services Application"
     version: "1.0.0"
+
 

@@ -51,7 +51,7 @@ public class AccountsServiceImpl implements IAccountsService {
 		long randomAccNumber = 1000000000L + new Random().nextInt(900000000);
 
 		newAccount.setAccountNumber(randomAccNumber);
-		newAccount.setAccountType(AccountsConstants.USER);
+		newAccount.setAccountType(AccountsConstants.SELLER);
 		newAccount.setAddress(AccountsConstants.ADDRESS);
 		return newAccount;
 	}
@@ -78,7 +78,7 @@ public class AccountsServiceImpl implements IAccountsService {
 			AccountsMapper.mapToAccounts(accountsDto, accounts);
 			accounts = accountsRepository.save(accounts);
 
-			Long customerId = accounts.getCustomerId();
+			Long customerId = 1l;//accounts.getCustomerId();
 			Customer customer = customerRepository.findById(customerId)
 					.orElseThrow(() -> new ResourceNotFoundException("Customer", "CustomerID", customerId.toString()));
 			CustomerMapper.mapToCustomer(customerDto, customer);
